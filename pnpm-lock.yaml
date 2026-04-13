@@ -48,7 +48,7 @@ importers:
 
   packages/react-email:
     dependencies:
-      email-lint:
+      '@email-lint/core':
         specifier: workspace:*
         version: link:../email-lint
     devDependencies:

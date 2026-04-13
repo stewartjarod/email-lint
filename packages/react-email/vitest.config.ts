@@ -4,7 +4,7 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   resolve: {
     alias: {
-      'email-lint': path.resolve(__dirname, '../email-lint/src/index.ts'),
+      '@email-lint/core': path.resolve(__dirname, '../email-lint/src/index.ts'),
     },
   },
   test: {

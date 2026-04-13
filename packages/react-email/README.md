@@ -1,6 +1,6 @@
 # @email-lint/react-email
 
-Lint [React Email](https://react.email) components for client compatibility. Renders your component to HTML and validates it against [caniemail](https://www.caniemail.com/) data using [email-lint](https://www.npmjs.com/package/email-lint).
+Lint [React Email](https://react.email) components for client compatibility. Renders your component to HTML and validates it against [caniemail](https://www.caniemail.com/) data using [@email-lint/core](https://www.npmjs.com/package/@email-lint/core).
 
 ```ts
 import { lintComponent } from '@email-lint/react-email';
@@ -40,7 +40,7 @@ const result = await lintComponent(<Welcome />, { framework: undefined });
 const result = await lintComponent(<Welcome />, { showIgnored: true });
 ```
 
-Returns the same `LintResult` type as `email-lint` — see [email-lint docs](https://www.npmjs.com/package/email-lint) for the full type reference.
+Returns the same `LintResult` type as `@email-lint/core` — see [@email-lint/core docs](https://www.npmjs.com/package/@email-lint/core) for the full type reference.
 
 ## Use in tests
 

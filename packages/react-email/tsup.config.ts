@@ -10,5 +10,5 @@ export default defineConfig({
   treeshake: true,
   minify: false,
   outDir: 'dist',
-  external: ['react', '@react-email/render', 'email-lint'],
+  external: ['react', '@react-email/render', '@email-lint/core'],
 });

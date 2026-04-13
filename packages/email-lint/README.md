@@ -16,7 +16,7 @@ welcome.html
 ## Install
 
 ```sh
-npm install email-lint
+npm install @email-lint/core
 ```
 
 ## CLI
@@ -86,7 +86,7 @@ Use `--no-ignore-framework` to disable framework filtering, or `--show-ignored` 
 ## Library API
 
 ```ts
-import { lint } from 'email-lint';
+import { lint } from '@email-lint/core';
 
 const html = '<div style="cursor: pointer;">Click</div>';
 const result = lint(html, { preset: 'gmail' });
@@ -131,7 +131,7 @@ interface LintConfig {
 ### Formatters
 
 ```ts
-import { lint, formatPretty, formatJson, formatGitHub } from 'email-lint';
+import { lint, formatPretty, formatJson, formatGitHub } from '@email-lint/core';
 
 const result = lint(html);
 console.log(formatPretty([result]));

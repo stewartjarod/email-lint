@@ -35,7 +35,7 @@
     "prepublishOnly": "pnpm clean && pnpm build"
   },
   "dependencies": {
-    "email-lint": "workspace:*"
+    "@email-lint/core": "workspace:*"
   },
   "peerDependencies": {
     "@react-email/render": ">=1.0.0",

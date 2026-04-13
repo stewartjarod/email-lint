@@ -4,7 +4,7 @@ Lint email HTML for client compatibility using [caniemail](https://www.caniemail
 
 | Package | Description |
 |---|---|
-| [`email-lint`](./packages/email-lint) | Core linter + CLI |
+| [`@email-lint/core`](./packages/email-lint) | Core linter + CLI |
 | [`@email-lint/react-email`](./packages/react-email) | React Email integration |
 
 ## Development

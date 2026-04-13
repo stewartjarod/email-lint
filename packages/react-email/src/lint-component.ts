@@ -1,6 +1,6 @@
 import { render } from '@react-email/render';
-import type { LintConfig, LintResult } from 'email-lint';
-import { lint } from 'email-lint';
+import type { LintConfig, LintResult } from '@email-lint/core';
+import { lint } from '@email-lint/core';
 
 export async function lintComponent(
   element: React.ReactElement,
