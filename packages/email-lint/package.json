@@ -1,0 +1,78 @@
+{
+  "name": "email-lint",
+  "version": "0.2.0",
+  "description": "Lint email HTML for client compatibility using caniemail data. CLI + library.",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "email-lint": "./dist/cli.mjs"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rm -rf dist coverage",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm clean && pnpm build"
+  },
+  "dependencies": {
+    "caniemail": "^1.0.4",
+    "citty": "^0.1.6",
+    "jiti": "2.6.1",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.5",
+    "@types/node": "^24.10.0",
+    "@vitest/coverage-v8": "^4.0.8",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.8"
+  },
+  "keywords": [
+    "email",
+    "lint",
+    "linter",
+    "email-lint",
+    "caniemail",
+    "html-email",
+    "email-compatibility",
+    "react-email",
+    "cli",
+    "ci"
+  ],
+  "author": "Jarod Stewart",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stewartjarod/email-lint.git",
+    "directory": "packages/email-lint"
+  },
+  "homepage": "https://github.com/stewartjarod/email-lint/tree/main/packages/email-lint#readme",
+  "bugs": "https://github.com/stewartjarod/email-lint/issues",
+  "publishConfig": {
+    "access": "public"
+  }
+}

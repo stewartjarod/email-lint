@@ -1,0 +1,26 @@
+import path from 'node:path';
+import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+  resolve: {
+    alias: {
+      'email-lint': path.resolve(__dirname, '../email-lint/src/index.ts'),
+    },
+  },
+  test: {
+    globals: true,
+    environment: 'node',
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+      exclude: [
+        'node_modules/',
+        'dist/',
+        '**/*.test.ts',
+        '**/*.spec.ts',
+        'vitest.config.ts',
+        'tsup.config.ts',
+      ],
+    },
+  },
+});
