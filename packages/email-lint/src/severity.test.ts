@@ -51,6 +51,51 @@ describe('applySeverityRules', () => {
     expect(result.severity).toBe('warning');
   });
 
+  it('downgrades `transform` to info when element only has text-transform', () => {
+    const html = '<p style="text-transform:uppercase">Hello</p>';
+    const proto = baseProto({
+      title: 'transform',
+      message: '`transform` is not supported',
+      notes: [],
+      client: 'gmail.desktop-webmail',
+      position: { start: { line: 1, column: 1 }, end: { line: 1, column: 47 } },
+    });
+
+    const result = applySeverityRules(proto, html);
+
+    expect(result.severity).toBe('info');
+  });
+
+  it('keeps `transform` as error when element has bare transform', () => {
+    const html = '<p style="transform:rotate(45deg)">Hello</p>';
+    const proto = baseProto({
+      title: 'transform',
+      message: '`transform` is not supported',
+      notes: [],
+      client: 'gmail.desktop-webmail',
+      position: { start: { line: 1, column: 1 }, end: { line: 1, column: 45 } },
+    });
+
+    const result = applySeverityRules(proto, html);
+
+    expect(result.severity).toBe('error');
+  });
+
+  it('keeps `transform` as error when element has both text-transform and transform', () => {
+    const html = '<p style="text-transform:uppercase;transform:scale(2)">Hello</p>';
+    const proto = baseProto({
+      title: 'transform',
+      message: '`transform` is not supported',
+      notes: [],
+      client: 'gmail.desktop-webmail',
+      position: { start: { line: 1, column: 1 }, end: { line: 1, column: 65 } },
+    });
+
+    const result = applySeverityRules(proto, html);
+
+    expect(result.severity).toBe('error');
+  });
+
   it('appends " — <note>" to message when proto has a note', () => {
     const proto = baseProto({
       title: 'transform',

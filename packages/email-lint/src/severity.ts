@@ -7,6 +7,28 @@ import type { ProtoDiagnostic } from './collapse.ts';
  */
 const A_TARGET_BLANK_RE = /<a\b[^>]*?\btarget\s*=\s*(?:"_blank"|'_blank'|_blank)[^>]*?>/i;
 
+/**
+ * Matches a bare `transform` property in a style attribute (not `text-transform`).
+ * caniemail incorrectly reports `text-transform` with the title "transform".
+ * If the element only uses `text-transform` and not bare `transform`, the diagnostic
+ * is a false positive.
+ */
+const BARE_TRANSFORM_RE = /(?<![a-z-])transform\s*:/i;
+
+/**
+ * Extract the opening tag at (line, column) from the HTML string.
+ * Returns the full `<tag ...>` string, or undefined if not found.
+ */
+function extractElement(html: string, line: number, column: number): string | undefined {
+  const lines = html.split('\n');
+  if (line < 1 || line > lines.length) return undefined;
+  const offset = lines.slice(0, line - 1).reduce((sum, l) => sum + l.length + 1, 0) + (column - 1);
+  if (html[offset] !== '<') return undefined;
+  const close = html.indexOf('>', offset);
+  if (close === -1) return undefined;
+  return html.slice(offset, close + 1);
+}
+
 function appendNoteToMessage(message: string, notes: string[]): string {
   if (notes.length === 0) return message;
   return `${message} — ${notes[0]}`;
@@ -36,6 +58,16 @@ export function applySeverityRules(proto: ProtoDiagnostic, html: string): ProtoD
 
   if (proto.title === 'cursor') {
     return { ...proto, severity: 'info', message };
+  }
+
+  // caniemail reports `text-transform` as "transform" (false positive).
+  // Check the actual element: if it has `text-transform` but no bare `transform:`,
+  // suppress by downgrading to info.
+  if (proto.title === 'transform' && proto.position) {
+    const element = extractElement(html, proto.position.start.line, proto.position.start.column);
+    if (element && !BARE_TRANSFORM_RE.test(element)) {
+      return { ...proto, severity: 'info', message };
+    }
   }
 
   if (

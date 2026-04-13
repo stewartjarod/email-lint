@@ -134,7 +134,7 @@ const check = defineCommand({
 const main = defineCommand({
   meta: {
     name: 'email-lint',
-    version: '0.2.0',
+    version: '0.2.1',
     description: 'Lint email HTML for client compatibility',
   },
   subCommands: { check },

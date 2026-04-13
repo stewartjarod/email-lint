@@ -1,6 +1,6 @@
 {
   "name": "@email-lint/core",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Lint email HTML for client compatibility using caniemail data. CLI + library.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
