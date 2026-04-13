@@ -13,6 +13,19 @@ welcome.html
 ✖ 1 error, 2 warnings
 ```
 
+## Why not use caniemail directly?
+
+The [`caniemail`](https://www.npmjs.com/package/caniemail) npm package gives you raw compatibility data — one diagnostic per client variant, no severity distinction, no output formatting. For a single HTML file that's 26+ individual results you have to interpret yourself.
+
+email-lint builds on that data and makes it usable:
+
+- **Family collapsing** — "unsupported in gmail.android, gmail.ios, gmail.desktop-webmail, gmail.mobile-webmail" becomes one line: `cursor not supported (4/4 variants) [gmail]`
+- **Severity rules** — Not all issues are equal. `cursor` is cosmetic in email (downgraded to `info`). Gmail forces `target="_blank"` on all links, so if you already use it, that's `info` not `error`
+- **Framework filtering** — React Email adds preview text blocks, preload image tags, and `target="_blank"` to its output. Raw caniemail flags all of these. email-lint knows they're framework artifacts and suppresses them
+- **CLI with exit codes** — `email-lint check` returns exit code 1 on errors, so you can drop it into CI without writing a wrapper
+- **Output formats** — Pretty terminal output, JSON for tooling, GitHub Actions annotations that show inline on PR diffs
+- **TSX support** — Point it at a `.tsx` component and it renders + lints in one step, no build pipeline needed
+
 ## Install
 
 ```sh
