@@ -1,6 +1,6 @@
 {
   "name": "@email-lint/react-email",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Lint react-email components for client compatibility using email-lint.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
