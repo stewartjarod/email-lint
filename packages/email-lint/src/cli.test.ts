@@ -79,6 +79,18 @@ describe('CLI', () => {
     }
   });
 
+  it('--preset accepts comma-separated values', () => {
+    const file = makeTempHtml('<div style="background-image: url(test.png)">hello</div>');
+    const { stdout } = runCli(['--format', 'json', '--preset', 'gmail,outlook', file]);
+
+    const parsed = JSON.parse(stdout);
+    for (const result of parsed) {
+      for (const diag of result.diagnostics) {
+        expect(diag.family).toBeOneOf(['outlook']);
+      }
+    }
+  });
+
   it('--verbose expands a 4/4 gmail diagnostic to one line per variant', () => {
     // `cursor: pointer` is unsupported in all 4 Gmail variants
     const file = makeTempHtml('<div style="cursor: pointer">hello</div>');
