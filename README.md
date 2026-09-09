@@ -34,7 +34,7 @@ npm install @email-lint/core
 
 ## What it does
 
-Raw [caniemail](https://www.npmjs.com/package/caniemail) data gives you one diagnostic per client variant — 26+ results per issue, no severity levels, no formatting. email-lint makes that data useful:
+[caniemail](https://www.npmjs.com/package/caniemail) parses your HTML and CSS and hands back structured errors and warnings, with helpers to group and format them. email-lint is the linter on top: it decides which of those you should care about, and gets the answer into your terminal and your CI:
 
 - **Collapses by family** — 4 Gmail variants become one line: `(4/4 variants) [gmail]`
 - **Smart severity** — `cursor` is cosmetic (info, not error). Gmail forces `target="_blank"` on all links — if you already use it, that's info too
