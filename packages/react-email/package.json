@@ -54,11 +54,11 @@
     "@react-email/render": "^1.0.0",
     "@types/node": "^24.10.0",
     "@types/react": "^19.2.3",
-    "@vitest/coverage-v8": "^4.0.8",
+    "@vitest/coverage-v8": "^4.1.11",
     "react": "^19.0.0",
     "tsup": "^8.5.0",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.8"
+    "vitest": "^4.1.11"
   },
   "keywords": [
     "email-lint",

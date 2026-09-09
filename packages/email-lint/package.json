@@ -46,10 +46,10 @@
   "devDependencies": {
     "@biomejs/biome": "^2.3.5",
     "@types/node": "^24.10.0",
-    "@vitest/coverage-v8": "^4.0.8",
+    "@vitest/coverage-v8": "^4.1.11",
     "tsup": "^8.5.0",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.8"
+    "vitest": "^4.1.11"
   },
   "keywords": [
     "email",

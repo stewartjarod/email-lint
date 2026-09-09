@@ -1,2 +1,13 @@
 packages:
   - 'packages/*'
+
+# Security floors for transitive build/test tooling. Floors, not exact pins:
+# an exact pin becomes a ceiling the moment the next advisory lands, which is
+# how vite sat on 8.0.8 through four later CVEs.
+#
+# pnpm no longer reads "pnpm.overrides" from package.json -- it lives here now,
+# and the old block was silently ignored.
+overrides:
+  vite: '>=8.0.16'
+  postcss: '>=8.5.23'
+  esbuild: '>=0.28.1'

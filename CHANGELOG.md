@@ -19,6 +19,9 @@
 - `--preset gmail, outlook` no longer fails on the space after the comma.
   Trailing commas and repeated names are handled too.
 - Bumped nanoid to 3.3.18.
+- Cleared the nine open advisories in the build and test toolchain: vite to
+  8.2.2, vitest to 4.1.11, postcss to 8.5.28, esbuild to 0.28.2. All are
+  devDependencies, so nothing reached anyone installing this package.
 
 All three requests in #3 are now covered.
 
