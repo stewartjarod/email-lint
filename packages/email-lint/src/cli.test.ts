@@ -121,13 +121,17 @@ describe('CLI', () => {
 
     const before = runCli(['--format', 'json', '--preset', 'gmail,outlook', file]);
     const after = runCli([
-      '--format', 'json', '--preset', 'gmail,outlook', '--exclude', 'gmail', file,
+      '--format',
+      'json',
+      '--preset',
+      'gmail,outlook',
+      '--exclude',
+      'gmail',
+      file,
     ]);
 
     const families = (out: string) =>
-      new Set<string>(
-        JSON.parse(out).flatMap((r: any) => r.diagnostics.map((d: any) => d.family))
-      );
+      new Set<string>(JSON.parse(out).flatMap((r: any) => r.diagnostics.map((d: any) => d.family)));
 
     expect([...families(before.stdout)].sort()).toEqual(['gmail', 'outlook']);
     expect([...families(after.stdout)].sort()).toEqual(['outlook']);
@@ -138,7 +142,13 @@ describe('CLI', () => {
 
     const kept = runCli(['--format', 'json', '--preset', 'gmail', file]);
     const gone = runCli([
-      '--format', 'json', '--preset', 'gmail', '--exclude', 'orange, gmail', file,
+      '--format',
+      'json',
+      '--preset',
+      'gmail',
+      '--exclude',
+      'orange, gmail',
+      file,
     ]);
 
     expect(JSON.parse(kept.stdout).flatMap((r: any) => r.diagnostics).length).toBeGreaterThan(0);

@@ -70,9 +70,7 @@ export function makeClientFilter(exclude?: string): (client: string) => boolean 
     if (pattern === '*') {
       return true;
     }
-    const [provider, platform] = pattern.includes('.')
-      ? pattern.split('.')
-      : [pattern, '*'];
+    const [provider, platform] = pattern.includes('.') ? pattern.split('.') : [pattern, '*'];
     const [clientProvider, clientPlatform] = client.split('.');
     return (
       (provider === '*' || provider === clientProvider) &&
