@@ -48,6 +48,10 @@ email-lint check welcome.html --preset outlook
 # Several at once, for the union of their clients
 email-lint check welcome.html --preset gmail,outlook
 
+# Drop clients your audience never uses
+email-lint check welcome.html --exclude orange,mail-ru
+email-lint check welcome.html --preset all-clients --exclude '*.android'
+
 # Output formats
 email-lint check welcome.html --format pretty   # default, colored terminal output
 email-lint check welcome.html --format json      # structured JSON for tooling
@@ -139,6 +143,7 @@ interface LintDiagnostic {
 
 interface LintConfig {
   preset?: string;                  // Client preset (default: "all-clients")
+  exclude?: string;                 // Clients to drop, comma-separated globs
   framework?: 'react-email';       // Enable framework-aware filtering
   showIgnored?: boolean;            // Keep suppressed diagnostics in output
 }

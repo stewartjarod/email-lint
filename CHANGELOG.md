@@ -1,8 +1,13 @@
 # Changelog
 
-## 0.2.2
+## 0.3.0
 
 ### Added
+
+- `--exclude` drops clients from a run: `--exclude orange,mail-ru`. Takes a bare
+  provider, a concrete client, or a platform glob (`*.android`). Requested by
+  [@deltamualpha](https://github.com/deltamualpha) in
+  [#3](https://github.com/stewartjarod/email-lint/issues/3).
 
 - `--preset` accepts a comma-separated list, so `--preset gmail,outlook` lints
   against the union of both. Thanks to [@deltamualpha](https://github.com/deltamualpha),
@@ -14,6 +19,8 @@
 - `--preset gmail, outlook` no longer fails on the space after the comma.
   Trailing commas and repeated names are handled too.
 - Bumped nanoid to 3.3.18.
+
+All three requests in #3 are now covered.
 
 ### Docs
 

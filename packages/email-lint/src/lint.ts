@@ -2,17 +2,21 @@ import { caniemail, formatIssue } from 'caniemail';
 
 import { collapseByFamily, type ProtoDiagnostic } from './collapse.ts';
 import { applyFrameworkFilter } from './framework-filter.ts';
-import { resolvePreset } from './presets.ts';
+import { makeClientFilter, resolvePreset } from './presets.ts';
 import { applySeverityRules } from './severity.ts';
 import type { LintConfig, LintDiagnostic, LintResult } from './types.ts';
 
 export function lint(html: string, config?: LintConfig): LintResult {
   const clients = resolvePreset(config?.preset ?? 'all-clients');
+  const keepClient = makeClientFilter(config?.exclude);
   const result = caniemail({ html, clients });
 
   const protos: ProtoDiagnostic[] = [];
 
   for (const [client, issues] of result.issues.errors) {
+    if (!keepClient(client)) {
+      continue;
+    }
     for (const issue of issues) {
       const formatted = formatIssue({ client, issue, issueType: 'error' });
       protos.push(
@@ -38,6 +42,9 @@ export function lint(html: string, config?: LintConfig): LintResult {
   }
 
   for (const [client, issues] of result.issues.warnings) {
+    if (!keepClient(client)) {
+      continue;
+    }
     for (const issue of issues) {
       const formatted = formatIssue({ client, issue, issueType: 'warning' });
       protos.push(

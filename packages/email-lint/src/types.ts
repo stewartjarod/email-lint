@@ -37,6 +37,8 @@ export interface LintResult {
 
 export interface LintConfig {
   preset?: string;
+  /** Comma-separated client globs to drop from the preset, e.g. "orange,mail-ru". */
+  exclude?: string;
   /** When set, apply framework-aware filtering. Currently only 'react-email' is supported. */
   framework?: 'react-email';
   /**

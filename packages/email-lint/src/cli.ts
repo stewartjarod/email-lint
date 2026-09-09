@@ -62,6 +62,10 @@ const check = defineCommand({
       required: true,
     },
     preset: { type: 'string', default: 'all-clients', description: 'Client preset' },
+    exclude: {
+      type: 'string',
+      description: 'Clients to drop from the preset, comma-separated (e.g. orange,mail-ru)',
+    },
     format: {
       type: 'string',
       default: 'pretty',
@@ -91,6 +95,7 @@ const check = defineCommand({
     const filePaths = args._.map((f) => resolve(f));
     const format = args.format;
     const preset = args.preset;
+    const exclude = args.exclude;
     const verbose = args.verbose === true;
     const noIgnoreFramework = args['no-ignore-framework'] === true;
     const showIgnored = args['show-ignored'] === true;
@@ -107,7 +112,7 @@ const check = defineCommand({
           args.framework === 'react-email' ? ('react-email' as const) : undefined;
         const framework: LintConfig['framework'] =
           explicitFramework ?? (isTsx && !noIgnoreFramework ? 'react-email' : undefined);
-        const result = lint(html, { preset, framework, showIgnored });
+        const result = lint(html, { preset, exclude, framework, showIgnored });
         results.push({ ...result, filePath });
       } catch (err) {
         const message = err instanceof Error ? err.message : String(err);

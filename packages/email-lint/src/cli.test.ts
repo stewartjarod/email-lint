@@ -111,6 +111,40 @@ describe('CLI', () => {
     expect(stdout).toContain('Unknown preset "nope"');
   });
 
+  it('--exclude drops a client from the preset', () => {
+    // cursor:pointer trips gmail, background-image trips outlook. Excluding
+    // gmail must leave outlook's finding intact -- an --exclude that silently
+    // dropped everything, or nothing, would pass a one-sided assertion.
+    const file = makeTempHtml(
+      '<div style="cursor: pointer"><p style="background-image: url(a.png)">hi</p></div>'
+    );
+
+    const before = runCli(['--format', 'json', '--preset', 'gmail,outlook', file]);
+    const after = runCli([
+      '--format', 'json', '--preset', 'gmail,outlook', '--exclude', 'gmail', file,
+    ]);
+
+    const families = (out: string) =>
+      new Set<string>(
+        JSON.parse(out).flatMap((r: any) => r.diagnostics.map((d: any) => d.family))
+      );
+
+    expect([...families(before.stdout)].sort()).toEqual(['gmail', 'outlook']);
+    expect([...families(after.stdout)].sort()).toEqual(['outlook']);
+  });
+
+  it('--exclude accepts a list and a platform glob', () => {
+    const file = makeTempHtml('<div style="cursor: pointer">hello</div>');
+
+    const kept = runCli(['--format', 'json', '--preset', 'gmail', file]);
+    const gone = runCli([
+      '--format', 'json', '--preset', 'gmail', '--exclude', 'orange, gmail', file,
+    ]);
+
+    expect(JSON.parse(kept.stdout).flatMap((r: any) => r.diagnostics).length).toBeGreaterThan(0);
+    expect(JSON.parse(gone.stdout).flatMap((r: any) => r.diagnostics)).toEqual([]);
+  });
+
   it('--verbose expands a 4/4 gmail diagnostic to one line per variant', () => {
     // `cursor: pointer` is unsupported in all 4 Gmail variants
     const file = makeTempHtml('<div style="cursor: pointer">hello</div>');
