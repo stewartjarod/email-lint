@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import { defineCommand, runMain } from 'citty';
-import { createJiti } from 'jiti';
 import { readFileSync } from 'node:fs';
 import { extname, resolve } from 'node:path';
+import { defineCommand, runMain } from 'citty';
+import { createJiti } from 'jiti';
 
 import { getFormatter } from './formatters/index.ts';
 import { lint } from './lint.ts';

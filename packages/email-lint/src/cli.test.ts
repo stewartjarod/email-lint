@@ -79,16 +79,36 @@ describe('CLI', () => {
     }
   });
 
-  it('--preset accepts comma-separated values', () => {
-    const file = makeTempHtml('<div style="background-image: url(test.png)">hello</div>');
+  it('--preset unions the listed presets', () => {
+    // cursor:pointer is unsupported in gmail, background-image is unsupported in
+    // outlook. Both families must appear, or the union silently dropped one --
+    // a fixture that only trips one client passes even when the union is broken.
+    const file = makeTempHtml(
+      '<div style="cursor: pointer"><p style="background-image: url(a.png)">hi</p></div>'
+    );
     const { stdout } = runCli(['--format', 'json', '--preset', 'gmail,outlook', file]);
 
-    const parsed = JSON.parse(stdout);
-    for (const result of parsed) {
-      for (const diag of result.diagnostics) {
-        expect(diag.family).toBeOneOf(['outlook']);
-      }
-    }
+    const families = new Set<string>(
+      JSON.parse(stdout).flatMap((r: any) => r.diagnostics.map((d: any) => d.family))
+    );
+    expect([...families].sort()).toEqual(['gmail', 'outlook']);
+  });
+
+  it('--preset tolerates spaces and repeats', () => {
+    const file = makeTempHtml('<div style="cursor: pointer">hello</div>');
+    const { stdout } = runCli(['--format', 'json', '--preset', 'gmail, gmail', file]);
+
+    const diags = JSON.parse(stdout).flatMap((r: any) => r.diagnostics);
+    expect(diags.length).toBeGreaterThan(0);
+    expect(new Set(diags.map((d: any) => d.family))).toEqual(new Set(['gmail']));
+  });
+
+  it('--preset rejects an unknown name in a list', () => {
+    const file = makeTempHtml('<div>hello</div>');
+    const { stdout, exitCode } = runCli(['--preset', 'gmail,nope', file]);
+
+    expect(exitCode).not.toBe(0);
+    expect(stdout).toContain('Unknown preset "nope"');
   });
 
   it('--verbose expands a 4/4 gmail diagnostic to one line per variant', () => {

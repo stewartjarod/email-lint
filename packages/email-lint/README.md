@@ -22,7 +22,7 @@ What it does not do is decide what matters in your codebase, or put an answer in
 - **Family collapsing** — "unsupported in gmail.android, gmail.ios, gmail.desktop-webmail, gmail.mobile-webmail" becomes one line: `cursor not supported (4/4 variants) [gmail]`
 - **Severity rules** — Not all issues are equal. `cursor` is cosmetic in email (downgraded to `info`). Gmail forces `target="_blank"` on all links, so if you already use it, that's `info` not `error`
 - **Framework filtering** — React Email adds preview text blocks, preload image tags, and `target="_blank"` to its output. caniemail flags all of these. email-lint knows they're framework artifacts and suppresses them
-- **CLI with exit codes** — `email-lint check` returns exit code 1 on errors, so you can drop it into CI without writing a wrapper
+- **CLI with exit codes** — `email-lint check` exits 1 on errors and 0 when the only findings are warnings, so CI blocks on the things that break and stays quiet about the rest
 - **Output formats** — Pretty terminal output, JSON for tooling, GitHub Actions annotations that show inline on PR diffs
 - **TSX support** — Point it at a `.tsx` component and it renders + lints in one step, no build pipeline needed
 
@@ -44,6 +44,9 @@ email-lint check src/emails/welcome.tsx
 # Target specific clients
 email-lint check welcome.html --preset gmail
 email-lint check welcome.html --preset outlook
+
+# Several at once, for the union of their clients
+email-lint check welcome.html --preset gmail,outlook
 
 # Output formats
 email-lint check welcome.html --format pretty   # default, colored terminal output

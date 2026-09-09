@@ -23,7 +23,7 @@ npx @email-lint/core check welcome.html
 npx @email-lint/core check src/emails/welcome.tsx
 
 # Check only Gmail compatibility
-npx @email-lint/core check welcome.html --preset gmail
+npx @email-lint/core check welcome.html --preset gmail,outlook
 ```
 
 ## Install
@@ -39,7 +39,7 @@ npm install @email-lint/core
 - **Collapses by family** — 4 Gmail variants become one line: `(4/4 variants) [gmail]`
 - **Smart severity** — `cursor` is cosmetic (info, not error). Gmail forces `target="_blank"` on all links — if you already use it, that's info too
 - **React Email aware** — Suppresses false positives from framework internals (preview blocks, preload images, forced `target="_blank"`)
-- **CI-ready** — Exit code 1 on errors. GitHub Actions formatter shows inline annotations on PR diffs
+- **CI-ready** — Exits 1 on errors, 0 when only warnings remain. GitHub Actions formatter shows inline annotations on PR diffs
 - **TSX support** — Point it at a `.tsx` component, it renders and lints in one step
 
 ## Use with React Email
