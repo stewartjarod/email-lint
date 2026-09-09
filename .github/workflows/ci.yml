@@ -11,9 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # No `version:` here on purpose. action-setup errors out if the version is
+      # given both here and as "packageManager" in package.json, so that field is
+      # the single source of truth and this stays in step with local installs.
       - uses: pnpm/action-setup@v4
-        with:
-          version: 10
       - uses: actions/setup-node@v4
         with:
           node-version: 20
